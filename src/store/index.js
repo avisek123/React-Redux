@@ -1,4 +1,9 @@
-const { redux, createStore, combineReducers } = require("redux");
+const {
+  redux,
+  createStore,
+  combineReducers,
+  applyMiddleware,
+} = require("redux");
 //store redux
 
 const Buy_Book = "Buy_Book";
@@ -32,11 +37,7 @@ const BookReducer = (state = intialStateBook, action) => {
         ...state,
         numberOfBooks: state.numberOfBooks - 1,
       };
-    // case "Buy_Pen":
-    //   return {
-    //     ...state,
-    //     numberOfPens: state.numberOfPens - 1,
-    //   };
+
     default:
       return state;
   }
@@ -53,15 +54,25 @@ const PenReducer = (state = intialStatePen, action) => {
       return state;
   }
 };
+
 const reducer = combineReducers({
   book: BookReducer,
   pen: PenReducer,
 });
-const store = createStore(reducer);
+const logger = (store = () => {
+  return (next) => {
+    return (action) => {
+      const result = next(action);
+      console.log(action);
+      return action;
+    };
+  };
+});
+const store = createStore(reducer, applyMiddleware(logger));
 console.log("Intial State", store.getStore());
-const unsubscribe = store.subscribe(() => {
+const updateValue = store.subscribe(() => {
   console.log("Update State", store.getStore());
 });
 store.dispatch(buyBook());
 store.dispatch(buyPen());
-unsubscribe();
+updateValue();
