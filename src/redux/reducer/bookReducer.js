@@ -1,6 +1,6 @@
 // create reducer
 
-import { BUY_BOOK } from "./bookType";
+import { BUY_BOOK } from "../action/bookAction";
 
 const intialState = {
   numberOfBooks: 10,

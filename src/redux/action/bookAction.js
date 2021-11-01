@@ -1,7 +1,8 @@
+// create Type
+
+export const BUY_BOOK = "BUY_BOOK";
+
 // create action
-
-import { BUY_BOOK } from "./bookType";
-
 export const buyBook = () => {
   return {
     type: BUY_BOOK,
