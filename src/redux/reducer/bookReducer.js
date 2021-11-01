@@ -1,6 +1,6 @@
 // create reducer
 
-import { BUY_BOOK } from "../action/bookAction";
+import { BUY_BOOK, SELL_BOOK } from "../action/bookAction";
 
 const intialState = {
   numberOfBooks: 10,
@@ -12,6 +12,11 @@ const bookReducer = (state = intialState, action) => {
       return {
         ...state,
         numberOfBooks: state.numberOfBooks - 1,
+      };
+    case SELL_BOOK:
+      return {
+        ...state,
+        numberOfBooks: state.numberOfBooks + 1,
       };
     default:
       return state;
