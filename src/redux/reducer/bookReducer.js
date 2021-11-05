@@ -11,12 +11,12 @@ const bookReducer = (state = intialState, action) => {
     case BUY_BOOK:
       return {
         ...state,
-        numberOfBooks: state.numberOfBooks - 1,
+        numberOfBooks: state.numberOfBooks - parseFloat(action.payload),
       };
     case SELL_BOOK:
       return {
         ...state,
-        numberOfBooks: state.numberOfBooks + 1,
+        numberOfBooks: state.numberOfBooks + action.payload,
       };
     default:
       return state;
