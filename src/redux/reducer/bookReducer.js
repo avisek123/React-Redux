@@ -1,28 +1,28 @@
 // create reducer
-
-import { BUY_BOOK, SELL_BOOK, GET_CITIES } from "../action/bookAction";
-
+import * as actions from "../action/bookAction";
 const intialState = {
-  numberOfBooks: 10,
+  loading: false,
   cities: [],
+  error: "",
 };
-
 const bookReducer = (state = intialState, action) => {
   switch (action.type) {
-    case BUY_BOOK:
+    case actions.USER_REQ:
       return {
         ...state,
-        numberOfBooks: state.numberOfBooks - parseFloat(action.payload),
+        loading: true,
       };
-    case SELL_BOOK:
+    case actions.USER_RES:
       return {
-        ...state,
-        numberOfBooks: state.numberOfBooks + parseFloat(action.payload),
-      };
-    case GET_CITIES:
-      return {
-        ...state,
+        loading: false,
         cities: action.payload,
+        error: "",
+      };
+    case "USER_ERR":
+      return {
+        loading: false,
+        cities: [],
+        error: action.payload,
       };
     default:
       return state;

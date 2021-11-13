@@ -1,48 +1,43 @@
+import axios from "axios";
 // fake api
 const API_URL = "https://mocki.io/v1/48419bdb-1d76-45a1-89cb-3ac3fcc7f6ca";
-// import axios from "axios";
 // create Type
 
-export const BUY_BOOK = "BUY_BOOK";
-export const SELL_BOOK = "SELL_BOOK";
-export const GET_CITIES = "GET_CITIES";
+const USER_REQ = "USER_REQ";
+const USER_RES = "USER_RES";
+const USER_ERR = "USER_ERR";
+export { USER_REQ, USER_RES, USER_ERR };
 
 // create action
-export const buyBook = (number) => {
+export const userReq = () => {
   return {
-    type: BUY_BOOK,
-    payload: number,
+    type: USER_REQ,
   };
 };
-// action num ber 2
-export const sellBook = (number) => {
+export const userRes = (data) => {
   return {
-    type: SELL_BOOK,
-    payload: number,
+    type: USER_RES,
+    payload: data,
+  };
+};
+export const userErr = (err) => {
+  return {
+    type: USER_ERR,
+    payload: err,
   };
 };
 
-export const getCities = () => {
+// create fetch function
+export const getData = () => {
   try {
     return async (dispatch) => {
-      const result = await fetch(API_URL, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const json = await result.json();
-
-      if (json) {
-        dispatch({
-          type: GET_CITIES,
-          payload: json,
-        });
-      } else {
-        console.log("Unable to fetch!");
-      }
+      dispatch(userReq());
+      const res = await axios.get(API_URL);
+      dispatch(userRes(res.data));
     };
   } catch (error) {
-    console.log(error);
+    return (dispatch) => {
+      dispatch(userErr(error));
+    };
   }
 };

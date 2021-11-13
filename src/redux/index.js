@@ -1,1 +1,1 @@
-export { buyBook, sellBook, getCities } from "./action/bookAction";
+export { getData } from "./action/bookAction";
