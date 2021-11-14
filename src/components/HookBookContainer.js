@@ -1,22 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getData } from "../redux";
-
+import { addTodo } from "../redux";
+import { StyledHeader } from "../styles/CenterDiv.styled";
 function HookBookContainer() {
-  const response = useSelector((state) => state.book);
+  const data = useSelector((state) => state.todoReducer);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getData());
-  }, [dispatch]);
-  console.log(response);
+  console.log(data);
+  const handleChange = (d) => {
+    console.log(d);
+  };
 
   return (
-    <div>
-      Hook Container
-      <h2>City Data </h2>
-    </div>
+    <StyledHeader>
+      <h2>Register</h2>
+      <input
+        onChange={(e) => dispatch(addTodo({ ...data, result: e.target.value }))}
+        type="text"
+        value={data?.result}
+        placeholder="type name"
+      />
+      <input
+        onChange={(e) => dispatch(addTodo({ ...data, count: e.target.value }))}
+        type="text"
+        value={data?.count}
+        placeholder="type name"
+      />
+      <button
+        onClick={() => {
+          handleChange(data);
+        }}
+      >
+        click
+      </button>
+    </StyledHeader>
   );
 }
 
